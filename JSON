@@ -1,0 +1,101 @@
+***JSON Web Services***
+
+JSON
+-JavaScript Object Notation, a lightweight computer data interchange format
+-Text based and human readable.
+-Provides an alternative to XML for transmitting data
+-JSON and XML"
+    .JSON data is Javascript, it's arguably easier to work with than XML
+    .Data represented in JSON will likely be smaller than the same data represented in XML (shorter transfer time)
+
+JSON DETAILS
+-Object
+    .{ obj }
+    .name: "value"
+    .name/value pairs are separated by ','
+-Array
+    .[]
+    .separated by ','
+
+JSON PARSING
+-To parse
+    .Load the whole file into a string -> Not efficient!
+    .Use JSONArray class to parse the JSON string into JSONArray and/or JSONObjects
+-http://jsoneditoronline.org
+
+***XML Web Services***
+
+WEB SERVICES
+-A web service is a server side component that is exposed over the internet over HTTP and sends/receives
+data in many formats which includes XML and JSON
+-Languages such as XML and JSON are simply representation mechanism to enable the transmission of
+structured data
+-XML -> Extensible Markup Language
+
+XML STRUCTURE
+-<?xml version="1.0"?>
+-open and close tags
+-ids are attributes
+-Can only have one root, all others are children
+-XML attrs values must be quoted
+-XML is case sensitive
+
+WELL-FORMED XML
+
+XML AND NAMESPACES
+-XML namespaces provide a simple method for qualifying element and attributes names used in XML docs
+by associating them with namespaces identified by the URI references
+-XML namespaces provide a method to avoid element name conflicts
+-In XML, element names are defined by the developer. This often results in a conflict when trying to
+mix XML docs from different XML applications
+-Solving the Name Conflict using a Prefix
+    .h:table -> HTML
+    .f:table -> XML
+-Namespaces must be defined
+    .defined by the xmlns attr in the start tag of an element
+    .xmlns:prefix="URI"
+
+XML PARSERS
+-Three Android APIs
+    .DOM -> Document Object Model [NOT RECOMMENDED -- REQUIRES ENTIRE TREE TO BE BUILT AND STORED IN MEMORY]
+    .SAX -> Simple API for XML
+    .XmlPull
+-Two Main Stream Parsers
+    .Push stream parsers: while loading the document, the parser will call back handlers whenever a new XML element is loaded.
+     Also referred to as event-driven parser. SAX parsers of this type.
+    .Pull stream parsers: are more like Java iterators or cursors, where you have to explicitly request
+    the retrieval of the next element. XmlPull parsers are of this type.
+
+SAX PARSERS
+-Push stream
+-Parsing starts at the top of the XML doc
+-Fires events based on events during parsing which mainly includes:
+    .Starting an XML Element Node
+    .Receiving XML Text Node
+    .Ending an XML Element Node
+-We should implement a handler to receive and response to these events received by the SAX parser
+-Events call specific handler callback methods
+-Class usually extends DefaultHandler
+-DefaultHandler only implements the call back method you need
+-Important Methods:
+    .startDocument(), endDocument()
+    .startElement(String uri, String localName, String qName, Attributes attrs)
+    .endElement(String uri, String localName, String qName)
+    .characters(char[] ch, int start, int length)
+-Very efficient with respect to memory
+-Does not maintain state of the parsed document which makes it difficult to parse documents with similar
+tags at different levels
+-Another issues is that you receive events while parsing the XML doc if you are not interested in these events,
+pull parser solves this.
+
+PULL PARSERS (XMLPULL)
+-No callback handlers
+-Only a few instructions are needed to parse XML doc
+-On-demand parser. It does not use events, instead it allows the user to control the read of the next
+entity by a call to next() function of the XmlPullParser class
+-Methods
+    .parser.getName()
+    .parser.getText()
+    .parser.nextText() --> Gets the next avail text immediately following your index
+    .parser.getAttributeValue(int index)
+    .getAttributeValue(String namespace, String name)
